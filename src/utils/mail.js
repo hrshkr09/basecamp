@@ -1,5 +1,5 @@
 import Mailgen from "mailgen";  
-import nodemailer from 'nodemialer'
+import nodemailer from 'nodemailer'
 
 const sendEmail = async (options)=>{
     const mailGenerator = new Mailgen({
@@ -15,10 +15,10 @@ const sendEmail = async (options)=>{
 
     const transporter = nodemailer.createTransport({
         host: process.env.MAILTRAP_SMTP_HOST,
-        port:process.env.MAILTRAP_SMTP_PORT,
+        port: process.env.MAILTRAP_SMTP_PORT,
         auth:{
             user: process.env.MAILTRAP_SMTP_USER,
-            pass: process.env.MAILTRAP_SMTP_PASSWORD
+            pass: process.env.MAILTRAP_SMTP_PASS
         }
     })
 
@@ -32,7 +32,7 @@ const sendEmail = async (options)=>{
     }
 
     try {
-        await transporter.sendEmail(mail)
+        await transporter.sendMail(mail)
     } catch (error) {
         console.error("Email service failed silently. Make sure that you have provided your MAILTRAP credentails in the .env file")
         console.error("Error: ",error)
@@ -47,7 +47,7 @@ const emailVerificationMailgenContent = (username , verificationUrl)=>{
             name : username ,
             intro: " Welcome to our App ! we'are excited to have you onboard.",
             action:{
-                intructions:"To verify your email please click on the following button",
+                instructions:"To verify your email please click on the following button",
                 button:{
                     color: "#22BC66",
                     text:"Verify your email",
@@ -65,7 +65,7 @@ const forgotPasswordMailgenContent = (username , passwordResetUrl)=>{
             name : username ,
             intro: "We got a request to reset the password fo your account",
             action:{
-                intructions:"To reset your password click on the following button or link",
+                instructions:"To reset your password click on the following button or link",
                 button:{
                     color: "#22BC66",
                     text:"Reset password",
